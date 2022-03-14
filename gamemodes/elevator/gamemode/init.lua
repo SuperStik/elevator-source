@@ -88,7 +88,7 @@ GM.CurrentSongTime	= 0 // time before the next song
 
 -- NET STRINGS
 util.AddNetworkString("Elevator_Sound")
-
+util.AddNetworkString("Elevator_Music")
 //=====================================================
 
 /**
@@ -688,7 +688,7 @@ function GM:PlaySoundAll( sound )
 end
 
 --[[
- -- Plays a sound for a player
+--  Plays a sound for a player
 --]]
 function GM:PlaySound( ply, sound )
 
@@ -698,24 +698,25 @@ function GM:PlaySound( ply, sound )
 
 end
 
-/**
- * Sends the current music to a player
- */
+--[[
+--  Sends the current music to a player
+--]]
 function GM:SendCurrentMusic( ply )
 
-	umsg.Start( "Elevator_StartMusic", ply )
-		umsg.Char( self.CurrentSongID )
-	umsg.End()
+	net.Start( "Elevator_Music" )
+		net.WriteUInt( self.CurrentSongID, 5 )
+	net.Send( ply )
 
 end
 
-/**
- * Ends the current music of a player
- */
+--[[
+--  Ends the current music of a player
+--]]
 function GM:EndCurrentMusic( ply )
 
-	umsg.Start( "Elevator_StopMusic", ply )
-	umsg.End()
+	net.Start( "Elevator_Music" )
+		net.WriteUInt( 0, 5 )
+	net.Send( ply )
 
 end
 

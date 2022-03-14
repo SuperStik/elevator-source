@@ -148,41 +148,35 @@ local function CreateMusic( id )
 
 end
 
-/**
- * UMSG - Plays intermission music
- */
-usermessage.Hook( "Elevator_StartMusic", function( um )
+--[[
+-- NET - Plays and stops intermission music
+--]]
+net.Receive( "Elevator_Music", function()
 
-	local id = um:ReadChar()
+	local id = net.ReadUInt( 5 )
+	local ply = LocalPlayer()
 
-	if LocalPlayer().Music && LocalPlayer().Music:IsPlaying() then
+	if id == 0 then
+		if !ply.Music and LocalPlayer().Music:IsPlaying() then
+			LocalPlayer().Music:FadeOut( 1 )
+		end
+	else
+		if ply.Music and ply.Music:IsPlaying() then
 
-		LocalPlayer().Music:FadeOut( 1 )
-		timer.Simple( 1, function() CreateMusic( id ) end )
-		return
+			ply.Music:FadeOut( 1 )
+			timer.Simple( 1, function() CreateMusic( id ) end )
+			return
 
-	end
+		end
 	
-	CreateMusic( id )
-
-end )
-
-/**
- * UMSG - Stops intermission music
- */
-usermessage.Hook( "Elevator_StopMusic", function( um )
-
-	if ( !LocalPlayer().Music ) then return end
-
-	if LocalPlayer().Music:IsPlaying() then
-		LocalPlayer().Music:FadeOut( 1 )
+		CreateMusic( id )
 	end
 
 end )
 
 --[[
- -- NET - Plays client-side sound
-]]
+--  NET - Plays client-side sound
+--]]
 net.Receive( "Elevator_Sound", function()
 
 	surface.PlaySound( GAMEMODE.Sounds[ net.ReadUInt( 7 ) ] )
