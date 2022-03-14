@@ -659,9 +659,7 @@ end )
  */
 function GM:StartMusicAll()
 
-	for _, ply in pairs( team.GetPlayers( TEAM_ELEVATOR ) ) do
-		self:SendCurrentMusic( ply )
-	end
+	self:SendCurrentMusic( team.GetPlayers( TEAM_ELEVATOR ) )
 
 end
 
@@ -670,9 +668,7 @@ end
  */
 function GM:StopMusicAll()
 	
-	for _, ply in pairs( team.GetPlayers( TEAM_ELEVATOR ) ) do
-		self:EndCurrentMusic( ply )
-	end
+	self:EndCurrentMusic( team.GetPlayers( TEAM_ELEVATOR ) )
 
 end
 
@@ -681,9 +677,7 @@ end
  */
 function GM:PlaySoundAll( sound )
 
-	for _, ply in pairs( team.GetPlayers( TEAM_ELEVATOR ) ) do
-		self:PlaySound( ply, sound )
-	end
+	self:PlaySound( team.GetPlayers( TEAM_ELEVATOR ), sound )
 
 end
 
