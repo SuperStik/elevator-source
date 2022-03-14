@@ -86,6 +86,9 @@ GM.LastSongID		= 0 // last intermission song played
 GM.CurrentSongID	= 0 // current intermission song
 GM.CurrentSongTime	= 0 // time before the next song
 
+-- NET STRINGS
+util.AddNetworkString("Elevator_Sound")
+
 //=====================================================
 
 /**
@@ -684,14 +687,14 @@ function GM:PlaySoundAll( sound )
 
 end
 
-/**
- * Plays a sound for a player
- */
+--[[
+ -- Plays a sound for a player
+--]]
 function GM:PlaySound( ply, sound )
 
-	umsg.Start( "Elevator_Sound", ply )
-		umsg.Char( sound )
-	umsg.End()
+	net.Start( "Elevator_Sound", )
+		net.WriteUInt( sound, 3 )
+	net.Send( ply )
 
 end
 

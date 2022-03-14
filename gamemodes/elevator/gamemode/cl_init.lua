@@ -180,12 +180,12 @@ usermessage.Hook( "Elevator_StopMusic", function( um )
 
 end )
 
-/**
- * UMSG - Plays client-side sound
- */
-usermessage.Hook( "Elevator_Sound", function( um )
+--[[
+ -- NET - Plays client-side sound
+]]
+net.Receive( "Elevator_Sound", function()
 
-	surface.PlaySound( GAMEMODE.Sounds[ um:ReadChar() ] )
+	surface.PlaySound( GAMEMODE.Sounds[ net.ReadUInt( 7 ) ] )
 
 end )
 
