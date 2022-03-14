@@ -692,7 +692,7 @@ end
 --]]
 function GM:PlaySound( ply, sound )
 
-	net.Start( "Elevator_Sound", )
+	net.Start( "Elevator_Sound" )
 		net.WriteUInt( sound, 3 )
 	net.Send( ply )
 
