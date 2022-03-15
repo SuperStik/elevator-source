@@ -25,8 +25,8 @@ GM.HUDToHide = { "CHudAmmo", "CHudCrosshair", "CHudZoom",
 local CrosshairColor = Color( 0, 183, 235, 200 )
 local CrosshairMat = Material( "effects/softglow" )
 
-// Vars for vignette (taken from gm_apartment code)
-local Vignette = true
+-- Vars for vignette (taken from gm_apartment code)
+local Vignette = CreateClientConVar("elev_vignette", "1", nil, nil, "Draw a vignette over the screen")
 local VignetteMat = Material( "sunabouzu/apartment_vignette" )
 
 //=====================================================
@@ -128,12 +128,12 @@ function GM:DrawHUDMessages()
 
 end
 
-/**
- * Draws a vignette over the screen
- */
+--[[
+--  Draws a vignette over the screen
+--]]
 function GM:HUDPaintBackground()
 
-	if Vignette then
+	if Vignette:GetBool() then
 		surface.SetDrawColor( 0, 0, 0, 200 )
 		surface.SetMaterial( VignetteMat )
 		surface.DrawTexturedRect( 0, 0, ScrW(), ScrH() )
