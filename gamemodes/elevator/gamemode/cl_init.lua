@@ -58,9 +58,9 @@ function GM:HUDPaint()
 
 end
 
-/**
- * Draws a crosshair on entities that the player can use (based on gm_apartment code)
- */
+--[[
+--  Draws a crosshair on entities that the player can use (based on gm_apartment code)
+--]]
 function GM:DrawCrosshair()
 
 	local ply = LocalPlayer()

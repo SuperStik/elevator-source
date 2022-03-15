@@ -2,7 +2,7 @@ GM.Name     = "Elevator: Source"
 GM.Author   = "pixelTail Games"
 DeriveGamemode( "base" )
 
-//=====================================================
+-------------------------------------------------------
 
 game.AddParticles("particles/elevator_particles.pcf")
 game.AddParticles("particles/slappy_titfuck_goddamn.pcf")
@@ -22,11 +22,11 @@ local ParticleSystems = { "mono_fire", "rays", "confetti", "confetti_puff",
 						  "big_fire", "med_fire", "fire_large_02_warp",
 						  "hair_fire" }
 						  
-for _, part in pairs( ParticleSystems ) do
+for _, part in ipairs( ParticleSystems ) do
 	PrecacheParticleSystem( part )
 end
 
-//=====================================================
+-------------------------------------------------------
 
 CHEAT_CONVAR = CreateConVar("sv_hedgehog", "0", { FCVAR_REPLICATED, FCVAR_CHEAT }, "Enable hedgehog mode.")
 SLAPFORCE_CVAR = CreateConVar("elev_slapforce", 400, { FCVAR_REPLICATED, FCVAR_CHEAT, FCVAR_NOTIFY, FCVAR_NEVER_AS_STRING }, "The amount of force slapping causes on players")
