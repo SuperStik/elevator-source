@@ -10,7 +10,7 @@ include( "postprocess/init.lua" )
 //=====================================================
 
 // Entities to draw a crosshair over
-GM.CrosshairEnts = { "elevator_drink", "elevator_tvremote", "elevator_tvvolume" }
+GM.CrosshairEnts = { elevator_drink=true, elevator_tvremote=true, elevator_tvvolume=true }
 
 // Binds to disable
 GM.DisableBinds = { "+menu", "+menu_context", "+speed" }
@@ -63,20 +63,21 @@ end
  */
 function GM:DrawCrosshair()
 
-	local pos = LocalPlayer():EyePos()
+	local ply = LocalPlayer()
+	local pos = ply:EyePos()
 	local trace = util.TraceLine({
 		["start"] = pos, 
-		["endpos"] = pos + ( LocalPlayer():GetAimVector() * 128 ), 
-		["filter"] = LocalPlayer()
+		["endpos"] = pos + ( ply:GetAimVector() * 128 ), 
+		["filter"] = ply
 	})
 
 	local ent = trace.Entity
 	if ( !IsValid( ent ) ) then return end
 
-	if self:ValidIngredient( ent ) || table.HasValue( self.CrosshairEnts, ent:GetClass() ) then
+	if self:ValidIngredient( ent ) || self.CrosshairEnts[ ent:GetClass() ] then
 
 		local w, h = ScrW() / 2, ScrH() / 2
-		local alpha, size = ( 1 - trace.Fraction ) * 255, ScreenScale( 8 )
+		local alpha, size = ( 1 - trace.Fraction ) * 255, ScrW() / 80 -- same as ScreenScale( 8 )
 		local radius = size / 2				
 
 		surface.SetDrawColor( CrosshairColor.r, CrosshairColor.g, CrosshairColor.b, alpha )
