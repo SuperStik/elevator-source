@@ -26,7 +26,7 @@ AddCSLuaFile( "postprocess/init.lua" )
 
 // CUSTOMIZABLES
 GM.IntermissionTime = { 45, 60 } // range of random time before next floor (in seconds)
-GM.RemoveNPCsAfter 	= 5 * 60 // automatically remove NPCs after 5 minutes
+GM.RemoveNPCsAfter 	= 300 // automatically remove NPCs after 5 minutes (5 * 60)
 
 GM.LobbyName		= "elevator_lobby" // entity name of lobby elevator
 GM.IntermissionName	= "elevator_main" // entity name of intermission elevator
@@ -89,6 +89,7 @@ GM.CurrentSongTime	= 0 // time before the next song
 -- NET STRINGS
 util.AddNetworkString("Elevator_Sound")
 util.AddNetworkString("Elevator_Music")
+util.AddNetworkString("Elevator_UpdateNPCName") -- remove later
 //=====================================================
 
 /**
@@ -654,27 +655,27 @@ hook.Add( "Move", "MoveElevator", function( ply, move )
 
 end )
 
-/**
- * Sends current music to all elevator players
- */
+--[[
+--  Sends current music to all elevator players
+--]]
 function GM:StartMusicAll()
 
 	self:SendCurrentMusic( team.GetPlayers( TEAM_ELEVATOR ) )
 
 end
 
-/**
- * Ends the current music to all elevator players
- */
+--[[
+--  Ends the current music to all elevator players
+--]]
 function GM:StopMusicAll()
 	
 	self:EndCurrentMusic( team.GetPlayers( TEAM_ELEVATOR ) )
 
 end
 
-/**
- * Plays a sound to all elevator players
- */
+--[[
+--  Plays a sound to all elevator players
+--]]
 function GM:PlaySoundAll( sound )
 
 	self:PlaySound( team.GetPlayers( TEAM_ELEVATOR ), sound )
@@ -745,10 +746,10 @@ function GM:SendNPCNames( ply )
 	
 		if ( IsValid( ent ) && ent:IsNPC() && ent.RealNameID ) then
 
-			umsg.Start( "Elevator_UpdateNPCName", ply )
-				umsg.Entity( ent )
-				umsg.Char( ent.RealNameID )
-			umsg.End()
+			net.Start( "Elevator_UpdateNPCName" )
+				net.WriteEntity( ent )
+				net.WriteUInt( ent.RealNameID, 6 )
+			net.Send( ply )
 
 		end
 
@@ -756,20 +757,20 @@ function GM:SendNPCNames( ply )
 
 end
 
-/**
- * Sets and sends an NPC's name
- */
-function GM:SetNPCName( ent )
+--[[
+--  Sets and sends an NPC's name
+--]]
+function GM:SetNPCName( ent ) -- replace with NWString or NW2String later
 
 	if ( !IsValid( ent ) || !ent:IsNPC() ) then return end
 
-	// store server side
+	-- store server side
 	ent.RealNameID = self:GetRandomNPCNameID( ent:GetModel() )
 	// send to all clients
-	umsg.Start( "Elevator_UpdateNPCName" )
-		umsg.Entity( ent )
-		umsg.Char( ent.RealNameID )
-	umsg.End()
+	net.Start( "Elevator_UpdateNPCName" )
+		net.WriteEntity( ent )
+		net.WriteUInt( ent.RealNameID, 6 )
+	net.Broadcast()
 
 end
 

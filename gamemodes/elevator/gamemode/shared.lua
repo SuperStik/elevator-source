@@ -37,7 +37,7 @@ ELEVATOR_WIDTH = 192
 // 		TEAMS
 // ======================
 
-TEAM_IDLE			= 1
+TEAM_IDLE		= 1
 TEAM_ELEVATOR		= 2
 TEAM_END			= 3
 
@@ -46,31 +46,31 @@ team.SetUp( TEAM_ELEVATOR, "In Elevator", Color( 255, 255, 128, 255 ) )
 team.SetUp( TEAM_END, "Chilling Out", Color( 255, 128, 255, 255 ) )
 
 
-// ======================
-// 		MUSIC
-// ======================
+--[[---------------------
+--		MUSIC
+-----------------------]]
 
 GM.Music = {
-	{ Sound("elevator/music/elevator_1.mp3"), 147 },
-	{ Sound("elevator/music/elevator_2.mp3"), 77 },
-	{ Sound("elevator/music/elevator_3.mp3"), 34 },
-	{ Sound("elevator/music/elevator_4.mp3"), 119 },
-	{ Sound("elevator/music/elevator_5.mp3"), 130 },
-	{ Sound("elevator/music/elevator_6.mp3"), 80 },
-	{ Sound("elevator/music/elevator_7.mp3"), 162 },
-	{ Sound("elevator/music/elevator_8.mp3"), 132 },
-	{ Sound("elevator/music/elevator_9.mp3"), 201 },
-	{ Sound("elevator/music/elevator_10.mp3"), 122 },
-	{ Sound("elevator/music/elevator_11.mp3"), 369 },
-	{ Sound("elevator/music/elevator_12.mp3"), 244 },
-	{ Sound("elevator/music/elevator_13.mp3"), 187 },
-	{ Sound("elevator/music/elevator_14.mp3"), 89 },
-	{ Sound("elevator/music/elevator_15.mp3"), 131 },
-	{ Sound("elevator/music/elevator_16.mp3"), 144 },
-	{ Sound("elevator/music/elevator_17.mp3"), 88 },
-	{ Sound("elevator/music/elevator_18.mp3"), 249 },
-	{ Sound("elevator/music/elevator_19.mp3"), 161 },
-	{ Sound("elevator/music/elevator_20.mp3"), 48 }
+	{ "elevator/music/elevator_1.mp3", 147 },
+	{ "elevator/music/elevator_2.mp3", 77 },
+	{ "elevator/music/elevator_3.mp3", 34 },
+	{ "elevator/music/elevator_4.mp3", 119 },
+	{ "elevator/music/elevator_5.mp3", 130 },
+	{ "elevator/music/elevator_6.mp3", 80 },
+	{ "elevator/music/elevator_7.mp3", 162 },
+	{ "elevator/music/elevator_8.mp3", 132 },
+	{ "elevator/music/elevator_9.mp3", 201 },
+	{ "elevator/music/elevator_10.mp3", 122 },
+	{ "elevator/music/elevator_11.mp3", 369 },
+	{ "elevator/music/elevator_12.mp3", 244 },
+	{ "elevator/music/elevator_13.mp3", 187 },
+	{ "elevator/music/elevator_14.mp3", 89 },
+	{ "elevator/music/elevator_15.mp3", 131 },
+	{ "elevator/music/elevator_16.mp3", 144 },
+	{ "elevator/music/elevator_17.mp3", 88 },
+	{ "elevator/music/elevator_18.mp3", 249 },
+	{ "elevator/music/elevator_19.mp3", 161 },
+	{ "elevator/music/elevator_20.mp3", 48 }
 }
 
 // ======================
@@ -204,16 +204,16 @@ function GM:IsGirl( mdl )
 	return string.find( tostring( mdl ), "female" )
 end
 
-/**
- * Returns a random NPC name ID (based on male/female list)
- */
+--[[
+--  Returns a random NPC name ID (based on male/female list)
+--]]
 function GM:GetRandomNPCNameID( mdl )
 
 	if ( self:IsGirl( mdl ) ) then
-		return math.random( 1, #self.FemaleNames )
+		return math.random( #self.FemaleNames )
 	end
 	
-	return math.random( 1, #self.MaleNames )
+	return math.random( #self.MaleNames )
 
 end
 
@@ -230,12 +230,12 @@ function GM:GetNPCName( id, mdl )
 
 end
 
-/**
- * Returns a random sound
- */
+--[[
+--  Returns a random sound
+--]]
 function GM:RandomSound( tbl )
 
-	return tbl[ math.random( 1, #tbl ) ]
+	return tbl[ math.random( #tbl ) ]
 
 end
 

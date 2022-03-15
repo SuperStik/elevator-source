@@ -183,26 +183,25 @@ net.Receive( "Elevator_Sound", function()
 
 end )
 
-/**
- * UMSG - Updates NPC name
- */
-usermessage.Hook( "Elevator_UpdateNPCName", function( um )
+--[[
+--  UMSG - Updates NPC name
+--]]
+net.Receive( "Elevator_UpdateNPCName", function()
 
-	local npc = um:ReadEntity()
+	local npc = net.ReadEntity()
 
 	if ( !IsValid( npc ) ) then return end
 
-	local id = um:ReadChar()
-	local mdl = npc:GetModel()
+	local id = net.ReadUInt( 6 )
 
-	npc.RealName = GAMEMODE:GetNPCName( id, mdl )
+	npc.RealName = GAMEMODE:GetNPCName( id, npc:GetModel() )
 
 end )
 
 /**
  * UMSG - Randomizes NPC names (for void floor)
  */
-usermessage.Hook( "Elevator_RandomNames", function( um )
+usermessage.Hook( "Elevator_RandomNames", function( um ) -- fix later
 
 	LocalPlayer().RandomNames = um:ReadBool()
 
