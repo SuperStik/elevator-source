@@ -158,7 +158,7 @@ net.Receive( "Elevator_Music", function()
 	local ply = LocalPlayer()
 
 	if id == 0 then
-		if !ply.Music and LocalPlayer().Music:IsPlaying() then
+		if ply.Music and LocalPlayer().Music:IsPlaying() then
 			LocalPlayer().Music:FadeOut( 1 )
 		end
 	else
@@ -180,7 +180,7 @@ end )
 --]]
 net.Receive( "Elevator_Sound", function()
 
-	surface.PlaySound( GAMEMODE.Sounds[ net.ReadUInt( 7 ) ] )
+	surface.PlaySound( GAMEMODE.Sounds[ net.ReadUInt(3) ] )
 
 end )
 
