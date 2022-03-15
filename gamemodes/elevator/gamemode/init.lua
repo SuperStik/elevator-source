@@ -495,6 +495,7 @@ function GM:Teleport(ent, fromFloor, toFloor)
 			vec = new
 		end
 
+		ent:SetPos(vec)
 		ent.DesiredPosition = vec -- required hack due to SetPos sometimes failing
 	else
 		-- store last sequence
