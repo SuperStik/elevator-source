@@ -584,51 +584,50 @@ function GM:MoveAllEnts( fromFloor, toFloor )
 
 end
 
-/**
- * Teleports an entity from one floor to a new floor
- */
+--[[
+--  Teleports an entity from one floor to a new floor
+--]]
 function GM:Teleport( ent, fromFloor, toFloor )
 
 	if ( !IsValid( ent ) || !IsValid( fromFloor ) || !IsValid( toFloor ) ) then return end
 
-	// Gather position data
+	-- Gather position data
 	local pos = ent:GetPos()
 	local old = fromFloor:GetPos()
 	local new = toFloor:GetPos()
 
-	// Offset position
-	local offset = pos - old
-	local vec = new + offset
+	-- Offset position
+	local vec = new + pos - old
 	
-	// Handle if entity is player
+	-- Handle if entity is player
 	if ent:IsPlayer() then
 
-		// The clamps use the clamps!
-		local dist = pos:Distance( old )
+		-- The clamps use the clamps!
+		local dist = pos:DistToSqr( old )
 
-		// NO LEAVING, EVER
-		if ( dist > ELEVATOR_WIDTH ) then
+		-- NO LEAVING, EVER
+		if ( dist > 36864 ) then -- ELEVATOR_WIDTH ^ 2
 			vec = new
 		end
 
-		ent.DesiredPosition = vec // required hack due to SetPos sometimes failing
+		ent.DesiredPosition = vec -- required hack due to SetPos sometimes failing
 
 	else
 
-		// store last sequence
+		-- store last sequence
 		if ( ent:IsNPC() ) then
 			ent.LastSequence = ent:GetSequence()
 		end
 
 		ent:SetPos( vec )
 
-		// set sequence
+		-- set sequence
 		if ( ent.LastSequence ) then
 			ent:ResetSequence( ent.LastSequence )
-			/*umsg.Start( "Elevator_SetNPCSequence", ply )
+			--[[umsg.Start( "Elevator_SetNPCSequence", ply )
 				umsg.Entity( ent )
 				umsg.Char( ent.LastSequence )
-			umsg.End()*/
+			umsg.End()]]
 		end
 
 	end
