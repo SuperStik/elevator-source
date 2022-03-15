@@ -40,9 +40,9 @@ function ENT:PhysicsCollide(data, physobj)
 		local vel = self:GetForward() * self.ShotSpeed * -1
 		data.HitEntity:GetPhysicsObject():SetVelocity(Vector(vel[1], vel[2], 0))
 		self.CanShoot = false
-		self:SetColor( Color( 255, 255, 255, 0 ) )
+		self:SetColor( color_transparent )
 		self:SetRenderMode( RENDERMODE_TRANSALPHA )
-		self:SetVelocity(Vector(0,0,0))
+		self:SetVelocity(vector_origin)
 		self:SetPos(ptable:GetPos() + Vector(0, 0, 25))
 		self:SetAngles(Angle(0, self:GetAngles().y, 0))
 		physobj:EnableMotion(false)
@@ -136,7 +136,7 @@ function ENT:UpdateCue(ball)
 		self:SetAngles(fwrd:Angle())
 	end
 	self.CanShoot = true
-	self:SetColor(255, 255, 255, 255)
+	self:SetColor(color_white)
 	self:SetRenderMode( RENDERMODE_TRANSALPHA )
 	if(ball != nil && ball.BilliardTableID == self.BilliardTableID && ball:IsValid()) then
 		self:SetPos(ball:GetPos())
