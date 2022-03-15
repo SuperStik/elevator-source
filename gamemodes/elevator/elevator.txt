@@ -1,11 +1,10 @@
-"Gamemode"
+"elevator"
 {
 	"title"			"Elevator: Source"
 	"base"			"base"
 	"maps"			"elevator"
-	"menusystem" 	"1"
-	"workshopid"	"158915836"
-
+	"menusystem" 		"1"
+	"workshopid"		"158915836"
 	"settings"
 	{
 		1
@@ -16,7 +15,6 @@
 			"type"		"CheckBox"
 			"default"	"1"
 		}
-
 		2
 		{
 			"name"		"elev_slapforce"
